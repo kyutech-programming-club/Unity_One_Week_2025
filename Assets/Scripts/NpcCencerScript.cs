@@ -14,14 +14,14 @@ public class NpcCencerScript : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.transform.tag == "pack")
-        {
-            Dictionary<GameObject, string> packs = nPCScript.pack_action;
-            if (!packs.ContainsKey(other.gameObject))
-            {
-                nPCScript.pack_action.Add(other.transform.gameObject, roll);
+        // if (other.transform.tag == "pack")
+        // {
+        //     Dictionary<GameObject, string> packs = nPCScript.pack_action;
+        //     if (!packs.ContainsKey(other.gameObject))
+        //     {
+        //         nPCScript.pack_action.Add(other.transform.gameObject, roll);
 
-            }
-        }
+        //     }
+        // }
     }
 }
