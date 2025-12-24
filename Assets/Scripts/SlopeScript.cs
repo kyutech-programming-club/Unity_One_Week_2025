@@ -5,7 +5,8 @@ using UnityEngine;
 public class SlopeScript : MonoBehaviour
 {
     // Start is called before the first frame update
-    public List<GameObject> packs = new List<GameObject>();
+    public List<GameObject> packprefabs = new List<GameObject>();
+    private List<GameObject> packs = new List<GameObject>();
     public bool isThrow;
     private float span = 1;
     public bool isCheck;
@@ -45,18 +46,30 @@ public class SlopeScript : MonoBehaviour
             if (span > 1)
             {
                 span = 0;
-                if (packs.Count > i)
+                if (packs.Count > 0)
                 {
-                    Instantiate(packs[i], new Vector3(0, 15, 0), Quaternion.identity);
-                    // packs.Remove(packs[0]);
-                    i += 1;
+                    Instantiate(packs[0], new Vector3(0, 15, 0), Quaternion.identity);
+                    packs.Remove(packs[0]);
+
                 }
                 else
                 {
-                    i = 0;
+                    int R = Random.Range(0, 3);
+                    for (int j = 0; j < 5 + R; j++)
+                    {
+                        packs.Add(packprefabs[Random.Range(0, 3)]);
+                    }
                     isThrow = false;
                 }
             }
+        }
+    }
+    void Start()
+    {
+        int R = Random.Range(0, 3);
+        for (int j = 0; j < 5 + R; j++)
+        {
+            packs.Add(packprefabs[Random.Range(0, 3)]);
         }
     }
 
