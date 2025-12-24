@@ -8158,12 +8158,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 342688e14381d8848b056162663acfef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  packs:
+  packprefabs:
   - {fileID: 6546075191527134530, guid: 32bd228c8e50e68498426736c1c8e1b3, type: 3}
   - {fileID: 3253250281799613625, guid: 7b4be8ec24cdce84c8c985563346517c, type: 3}
   - {fileID: 7361398132138749594, guid: 252625e6e5bb00042bb0642dd4a67b1b, type: 3}
-  - {fileID: 3253250281799613625, guid: 7b4be8ec24cdce84c8c985563346517c, type: 3}
-  - {fileID: 3253250281799613625, guid: 7b4be8ec24cdce84c8c985563346517c, type: 3}
   isThrow: 0
   isCheck: 0
   isMove: 0

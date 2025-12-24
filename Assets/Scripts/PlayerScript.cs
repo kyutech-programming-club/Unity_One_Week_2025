@@ -37,7 +37,14 @@ public class PlayerScript : MonoBehaviour
         //             Time.timeScale == normalScale ? slowScale : normalScale;
         //     }
         // }
-
+        if (transform.position.x < -2.5)
+        {
+            transform.position = new Vector3(-2.5f, transform.position.x, 0f);
+        }
+        if (transform.position.x > 2.5)
+        {
+            transform.position = new Vector3(2.5f, transform.position.x, 0f);
+        }
         //マウスの位置を取得
         Vector3 mousePos = Input.mousePosition;
         //Z座標をカメラからの距離に設定
