@@ -21,22 +21,22 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (hold)
-        {
-            if (Input.GetMouseButton(0))
-                Time.timeScale = slowScale;
-            else
-                Time.timeScale = normalScale;
-        }
-        // クリックしたら切り替え
-        else
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                Time.timeScale =
-                    Time.timeScale == normalScale ? slowScale : normalScale;
-            }
-        }
+        // if (hold)
+        // {
+        //     if (Input.GetMouseButton(0))
+        //         Time.timeScale = slowScale;
+        //     else
+        //         Time.timeScale = normalScale;
+        // }
+        // // クリックしたら切り替え
+        // else
+        // {
+        //     if (Input.GetMouseButtonDown(0))
+        //     {
+        //         Time.timeScale =
+        //             Time.timeScale == normalScale ? slowScale : normalScale;
+        //     }
+        // }
 
         //マウスの位置を取得
         Vector3 mousePos = Input.mousePosition;
@@ -44,9 +44,11 @@ public class PlayerScript : MonoBehaviour
         mousePos.z = Mathf.Abs(mainCamera.transform.position.z - fixedZ);//カメラからの距離を計算
         //スクリーン座標をワールド座標に変換
         Vector3 worldPos = mainCamera.ScreenToWorldPoint(mousePos);
+        if (worldPos.x < -2.5 || worldPos.x < -2.5 || worldPos.y < -1.2) return;
         //Rigidbodyを使ってプレイヤーを移動
         Vector3 targetPos = new Vector3(worldPos.x, worldPos.y, fixedZ);
         //プレイヤーを目標位置に移動
         rb.MovePosition(targetPos);
+
     }
 }

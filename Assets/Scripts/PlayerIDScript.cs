@@ -10,14 +10,5 @@ public class PlayerIDScript : MonoBehaviour
     public PlayerName lastname;
     // public string myKey="player";
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
