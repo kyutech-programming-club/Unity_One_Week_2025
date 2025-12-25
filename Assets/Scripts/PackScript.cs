@@ -32,21 +32,30 @@ public class PackScript : MonoBehaviour
     }
     //最後に所有していたプレイヤーのキー
     public string lastOwnerKey = "";
-    public string pointer;
+    public string pointer = "";
+    private List<string> names = new List<string>();
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.tag != "wall")
+        if (collision.transform.tag != "wall" && collision.transform.tag != "pack")
         {
+            GetComponent<AudioSource>().Play();
             PlayerIDScript p = collision.gameObject.GetComponent<PlayerIDScript>();
             if (p != null)
             {
-                if (lastOwnerKey == p.lastname.ToString())
+                string key = p.lastname.ToString();
+                if(names.Contains(key) == false)
                 {
-                    pointer = p.lastname.ToString();
-                }
-                else if (pointer != p.lastname.ToString())
-                {
-                    lastOwnerKey = p.lastname.ToString();
+                    if(names.Count > 1)
+                    {
+                        names.Remove(names[0]);
+                    }
+                    names.Add(key);
+                    lastOwnerKey = names[0];
+                    if(names.Count  >=  2)
+                    {
+                        pointer = names[1];
+                    }
+                    Debug.Log("Last Owner: " + lastOwnerKey + " Pointer: " + pointer); ;
                 }
             }
         }

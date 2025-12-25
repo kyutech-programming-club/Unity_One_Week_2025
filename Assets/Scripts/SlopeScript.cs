@@ -67,7 +67,7 @@ public class SlopeScript : MonoBehaviour
     void Start()
     {
         int R = Random.Range(0, 3);
-        for (int j = 0; j < 5 + R; j++)
+        for (int j = 0; j < 1; j++)
         {
             packs.Add(packprefabs[Random.Range(0, 3)]);
         }
