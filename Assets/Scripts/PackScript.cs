@@ -36,9 +36,9 @@ public class PackScript : MonoBehaviour
     private List<string> names = new List<string>();
     void OnCollisionEnter2D(Collision2D collision)
     {
+        GetComponent<AudioSource>().Play();
         if (collision.transform.tag != "wall" && collision.transform.tag != "pack")
         {
-            GetComponent<AudioSource>().Play();
             PlayerIDScript p = collision.gameObject.GetComponent<PlayerIDScript>();
             if (p != null)
             {
@@ -55,7 +55,7 @@ public class PackScript : MonoBehaviour
                     {
                         pointer = names[1];
                     }
-                    Debug.Log("Last Owner: " + lastOwnerKey + " Pointer: " + pointer); ;
+                    Debug.Log("Last Owner: " + lastOwnerKey + " Pointer: " + pointer);
                 }
             }
         }
