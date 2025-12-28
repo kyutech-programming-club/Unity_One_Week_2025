@@ -12,6 +12,7 @@ public class SlopeScript : MonoBehaviour
     public bool isCheck;
     public bool isMove;
     private int i;
+    public bool isrule;
     void FixedUpdate()
     {
         if (isMove == false) return;
@@ -21,6 +22,11 @@ public class SlopeScript : MonoBehaviour
             transform.position = Vector3.Lerp(new Vector3(0, 9, 0), new Vector3(0, 9, -3), span);
             if (span < 0)
             {
+                int R = Random.Range(0, 3);
+                for (int j = 0; j < 5 + R; j++)
+                {
+                    packs.Add(packprefabs[Random.Range(0, 3)]);
+                }
                 span = 0;
                 isThrow = true;
                 isCheck = false;
@@ -42,35 +48,47 @@ public class SlopeScript : MonoBehaviour
         }
         if (isThrow)
         {
-            span += Time.deltaTime;
-            if (span > 1)
+            if (isrule)
             {
-                span = 0;
-                if (packs.Count > 0)
+                span += Time.deltaTime;
+                if (span > 1)
                 {
-                    Instantiate(packs[0], new Vector3(0, 15, 0), Quaternion.identity);
-                    packs.Remove(packs[0]);
-
-                }
-                else
-                {
-                    int R = Random.Range(0, 3);
-                    for (int j = 0; j < 5 + R; j++)
+                    span = 0;
+                    if (packs.Count > 0)
                     {
-                        packs.Add(packprefabs[Random.Range(0, 3)]);
+                        Instantiate(packs[0], new Vector3(0, 15, 0), Quaternion.identity);
+                        packs.Remove(packs[0]);
+
                     }
+                    else
+                    {
+                        span = 0;
+                        isThrow = false;
+                    }
+                }
+            }
+            else
+            {
+                span += Time.deltaTime;
+                if (span > 1 && isOnce == false)
+                {
+                    isOnce = true;
+                    Instantiate(packPoint, new Vector3(0, 15, 0), Quaternion.identity);
+                }
+                if (isOnce == true && span > 2)
+                {
+                    span = 0;
+                    isOnce = false;
                     isThrow = false;
                 }
             }
         }
     }
+    private bool isOnce;
+    public GameObject packPoint;
     void Start()
     {
-        int R = Random.Range(0, 3);
-        for (int j = 0; j < 1; j++)
-        {
-            packs.Add(packprefabs[Random.Range(0, 3)]);
-        }
+        isThrow = false;
     }
 
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using System.Linq;
 using TMPro;
-
+using unityroom.Api;
 
 public class PointScript : MonoBehaviour
 {
@@ -24,9 +24,14 @@ public class PointScript : MonoBehaviour
     //表示順序
     private string[] displayOrder = new string[] { "player", "npc1", "npc2" };
     public List<TextMeshProUGUI> ranking = new List<TextMeshProUGUI>();
+    private PointScript pointScript;
+    private AudioSource audioSource;
+    public AudioSource finishAudio;
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        pointScript = FindAnyObjectByType<PointScript>();
         texts = new Dictionary<string, TextMeshProUGUI>(){
         {"player", playertext},
         {"npc1", npc1text},
@@ -45,34 +50,77 @@ public class PointScript : MonoBehaviour
     public GameObject UI;
     public void Finish()
     {
+        finishAudio.Play();
         UI.SetActive(true);
-        var sortedByKey = points.OrderBy(pair => pair.Key);
 
-        Debug.Log("Sorted by Key:");
-        int i = 0;
-        foreach (var kvp in sortedByKey)
+        var sorted = points
+            .OrderByDescending(x => x.Value)
+            .ToList(); // ← 明示的に List 化（安全）
+
+        for (int i = 0; i < ranking.Count && i < sorted.Count; i++)
         {
-            ranking[i].text = kvp.Key;
-            i += 1;
-            Debug.Log($"{kvp.Key} : {kvp.Value}");
+            string name = "";
+            if (sorted[i].Key == "player")
+            {
+                name = "赤プレイヤー";
+            }
+            else if (sorted[i].Key == "npc1")
+            {
+                name = "緑プレイヤー";
+            }
+            else if (sorted[i].Key == "npc2")
+            {
+                name = "青プレイヤー";
+            }
+            ranking[i].text = $"{name} ";
+            Debug.Log($"{i + 1}位 {sorted[i].Key} : {sorted[i].Value}");
+            if (isRule && sorted[i].Key == "player")
+            {
+                UnityroomApiClient.Instance.SendScore(1, sorted[i].Value, ScoreboardWriteMode.HighScoreDesc);
+            }
         }
     }
 
+    public SlopeScript slopeScript;
 
 
     //ポイントを加算する
+    public bool isRule;
+    private bool isFinish;
     public void PlusPoint(string key, int x)
     {
-        if (points.ContainsKey(key))
+
+        if (isFinish == true) return;
+        audioSource.Play();
+        if (isRule)
         {
-            points[key] += x;
-            texts[key].text = key + ":" + points[key].ToString();
+            if (points.ContainsKey(key))
+            {
+                points[key] += x;
+                texts[key].text = points[key].ToString();
+            }
+        }
+        else
+        {
+            if (points.ContainsKey(key))
+            {
+
+                points[key] += x;
+                texts[key].text = points[key].ToString();
+                if (points[key] > 4)
+                {
+                    isFinish = true;
+                    pointScript.Finish();
+                }
+                else
+                {
+                    slopeScript.isCheck = true;
+                    slopeScript.isMove = true;
+                }
+
+            }
         }
 
     }
     // Update is called once per frame
-    void Update()
-    {
-
-    }
 }
