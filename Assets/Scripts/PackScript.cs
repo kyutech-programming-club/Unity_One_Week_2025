@@ -9,10 +9,12 @@ public class PackScript : MonoBehaviour
     private CircleCollider2D circleCollider2D;
     public SpriteRenderer spriteRenderer;
     public int point;
+    private AudioSource audioSource;
     void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
         circleCollider2D = GetComponent<CircleCollider2D>();
+        audioSource = GetComponent<AudioSource>();
     }
     private bool isMove;
     void FixedUpdate()
@@ -29,35 +31,42 @@ public class PackScript : MonoBehaviour
                 spriteRenderer.sortingOrder = 5;
             }
         }
+        else
+        {
+            rigidbody2D.velocity = Vector3.ClampMagnitude(rigidbody2D.velocity, 15);
+        }
     }
     //最後に所有していたプレイヤーのキー
     public string lastOwnerKey = "";
     public string pointer = "";
+
     private List<string> names = new List<string>();
     void OnCollisionEnter2D(Collision2D collision)
     {
-        GetComponent<AudioSource>().Play();
-        if (collision.transform.tag != "wall" && collision.transform.tag != "pack")
-        {
-            PlayerIDScript p = collision.gameObject.GetComponent<PlayerIDScript>();
-            if (p != null)
-            {
-                string key = p.lastname.ToString();
-                if(names.Contains(key) == false)
-                {
-                    if(names.Count > 1)
-                    {
-                        names.Remove(names[0]);
-                    }
-                    names.Add(key);
-                    lastOwnerKey = names[0];
-                    if(names.Count  >=  2)
-                    {
-                        pointer = names[1];
-                    }
-                    Debug.Log("Last Owner: " + lastOwnerKey + " Pointer: " + pointer);
-                }
-            }
-        }
+        audioSource.Play();
+        // audioSource.Play();
+        // if (collision.transform.tag != "wall" && collision.transform.tag != "pack")
+        // {
+        //     PlayerIDScript p = collision.gameObject.GetComponent<PlayerIDScript>();
+        //     if (p != null)
+        //     {
+        //         string key = p.lastname.ToString();
+        //         if (names.Contains(key) == false)
+        //         {
+        //             if (names.Count > 1)
+        //             {
+        //                 names.Remove(names[0]);
+        //             }
+        //             names.Add(key);
+        //             lastOwnerKey = names[0];
+        //             if (names.Count >= 2)
+        //             {
+        //                 pointer = names[1];
+        //             }
+        //             Debug.Log("Last Owner: " + lastOwnerKey + " Pointer: " + pointer);
+        //         }
+        //     }
+        // }
+
     }
 }

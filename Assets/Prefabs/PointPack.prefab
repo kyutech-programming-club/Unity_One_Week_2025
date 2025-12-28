@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8767894220613487194}
   - component: {fileID: 1921884545436971782}
   m_Layer: 0
-  m_Name: Puck (2)
+  m_Name: PointPack
   m_TagString: pack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 5228647864149499301}
-  point: 100
+  point: 1
   lastOwnerKey: 
   pointer: 
 --- !u!82 &1921884545436971782

@@ -43,34 +43,58 @@ public class GoalScript : MonoBehaviour
             }
         }
     }
+    private GameObject othObj;
     private void OnCollisionEnter2D(Collision2D other)
     {
         PackScript lastOwnerKey = other.gameObject.GetComponent<PackScript>();
         //オブジェクトがpackタグを持っているか確認
         if (other.gameObject.CompareTag("pack"))
         {
+            if (othObj != null && othObj == other.gameObject)
+            {
+                return;
+            }
             PackScript packScript = other.gameObject.GetComponent<PackScript>();
-            string kickerKey = packScript.lastOwnerKey;
-            string pointer = packScript.pointer;
+            othObj = other.gameObject;
+            // string kickerKey = packScript.lastOwnerKey;
+            // string pointer = packScript.pointer;
             string keeperKey = ownerOfThisGoal.ToString();
-            if (kickerKey == keeperKey)
+            if (keeperKey == "player")
             {
-                if (pointer != "")
-                    PointScript.PlusPoint(pointer, packScript.point);
-                PointScript.PlusPoint(keeperKey, -packScript.point / 2);
+                PointScript.PlusPoint("npc1", packScript.point);
+                PointScript.PlusPoint("npc2", packScript.point);
+                PointScript.PlusPoint("player", -packScript.point);
             }
-            else if (keeperKey == pointer)
+            if (keeperKey == "npc1")
             {
+                PointScript.PlusPoint("npc1", -packScript.point);
+                PointScript.PlusPoint("npc2", packScript.point);
+                PointScript.PlusPoint("player", packScript.point);
+            }
+            if (keeperKey == "npc2")
+            {
+                PointScript.PlusPoint("npc1", packScript.point);
+                PointScript.PlusPoint("npc2", -packScript.point);
+                PointScript.PlusPoint("player", packScript.point);
+            }
+            // if (kickerKey == keeperKey)
+            // {
+            //     if (pointer != "")
+            //         PointScript.PlusPoint(pointer, packScript.point);
+            //     PointScript.PlusPoint(keeperKey, -packScript.point / 2);
+            // }
+            // else if (keeperKey == pointer)
+            // {
 
-                PointScript.PlusPoint(keeperKey, -packScript.point / 2);
-                if (kickerKey != "")
-                    PointScript.PlusPoint(kickerKey, packScript.point);
-            }
-            else
-            {
-                PointScript.PlusPoint(kickerKey, packScript.point);
-                PointScript.PlusPoint(keeperKey, -packScript.point / 2);
-            }
+            //     PointScript.PlusPoint(keeperKey, -packScript.point / 2);
+            //     if (kickerKey != "")
+            //         PointScript.PlusPoint(kickerKey, packScript.point);
+            // }
+            // else
+            // {
+            //     PointScript.PlusPoint(kickerKey, packScript.point);
+            //     PointScript.PlusPoint(keeperKey, -packScript.point / 2);
+            // }
             Destroy(other.gameObject);
         }
     }
