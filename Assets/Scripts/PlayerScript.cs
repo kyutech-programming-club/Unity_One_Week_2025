@@ -9,6 +9,7 @@ public class PlayerScript : MonoBehaviour
     public float slowScale = 0.2f;   // スロー時の時間倍率
     public float normalScale = 1f;   // 通常
     public bool hold = true;
+    public string role = "";
     private float fixedZ;//プレイヤーのZ座標を保持する変数
     // Start is called before the first frame update
     void Start()

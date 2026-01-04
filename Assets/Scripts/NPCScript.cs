@@ -13,8 +13,10 @@ public class NPCScript : MonoBehaviour
     public float circleR;
     public float speed;
     private Vector3 startpos;
+    public bool isMulti;
     void Start()
     {
+        if (isMulti) return;
         rigidbody2D = Npc.GetComponent<Rigidbody2D>();
         startpos = Npc.transform.position;
 
@@ -22,6 +24,7 @@ public class NPCScript : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (isMulti) return;
         if (pack != null)
         {
             rigidbody2D.velocity = (pack.transform.position - Npc.transform.position).normalized * speed;

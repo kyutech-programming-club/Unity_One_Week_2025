@@ -13,8 +13,10 @@ public class SlopeScript : MonoBehaviour
     public bool isMove;
     private int i;
     public bool isrule;
+    public bool isMulti;
     void FixedUpdate()
     {
+        if (isMulti) return;
         if (isMove == false) return;
         if (isCheck)
         {
