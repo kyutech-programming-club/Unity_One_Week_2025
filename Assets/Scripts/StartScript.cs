@@ -12,7 +12,7 @@ public class StartScript : MonoBehaviour
     public void GmaeStart()
     {
         Time.timeScale = 1;
-        StartCoroutine(LowerZ(500, 2f));
+        StartCoroutine(LowerZ(1000, 2f));
 
     }
 

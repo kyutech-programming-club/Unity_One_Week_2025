@@ -44,6 +44,7 @@ public class GoalScript : MonoBehaviour
         }
     }
     private GameObject othObj;
+    public bool isMulti;
     private void OnCollisionEnter2D(Collision2D other)
     {
         PackScript lastOwnerKey = other.gameObject.GetComponent<PackScript>();
@@ -95,7 +96,20 @@ public class GoalScript : MonoBehaviour
             //     PointScript.PlusPoint(kickerKey, packScript.point);
             //     PointScript.PlusPoint(keeperKey, -packScript.point / 2);
             // }
-            Destroy(other.gameObject);
+            if (isMulti == false)
+            {
+                Destroy(other.gameObject);
+            }
+            else
+            {
+                other.gameObject.transform.position = new Vector3(-0.303909302f, 4.45999956f, 0.00999999046f);
+                if (rigidbody2D == null)
+                {
+                    rigidbody2D = other.gameObject.GetComponent<Rigidbody2D>();
+                }
+                rigidbody2D.AddForce(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), ForceMode2D.Impulse);
+            }
         }
     }
+    private Rigidbody2D rigidbody2D;
 }
